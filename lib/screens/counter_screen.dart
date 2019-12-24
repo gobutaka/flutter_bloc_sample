@@ -11,6 +11,7 @@ class CounterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // blocは子widgetのbuild()メソッドで呼ぶのが定番
     final counterBloc = Provider.of<CounterBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -28,7 +29,7 @@ class CounterScreen extends StatelessWidget {
               stream: counterBloc.count,
               builder: (context, snapshot) {
                 return Text(
-                  '${snapshot.data}',
+                  '${snapshot.data.value}',
                   style: Theme.of(context).textTheme.display1,
                 );
               },
@@ -39,7 +40,7 @@ class CounterScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // カウントアップアクションをblocに送る
-          counterBloc.increment.add(null);
+          counterBloc.increment();
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),

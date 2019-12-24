@@ -1,29 +1,35 @@
+import 'package:flutter_bloc_sample/models/counter.dart';
 import 'dart:async';
 
 class CounterBloc {
-  // ボタンによるカウントアップ入力を受け付けるStreamController
-  final _actionController = StreamController<void>();
-  // _actionControllerのsink(受け取り口)をincreamentとする
-  Sink<void> get increment => _actionController.sink;
+  // コンストラクタ（クラスのインスタンス生成時に実行される）
+  CounterBloc() {
+    _countController.sink.add(_counter);
+  }
 
   // _actionControllerからカウントアップした値を受け取るStreamController
-  final _countController = StreamController<int>();
-  // _countControllerのstream(出力口)をcountとする
-  Stream<int> get count => _countController.stream;
+  final _countController = StreamController<Counter>();
 
-  int _count = 0;
+   // _countControllerのstream(出力口)をcountとする
+  Stream<Counter> get count => _countController.stream;
 
-  CounterBloc() {
-    // _actionControllerに値が流れてきた時
-    _actionController.stream.listen((_) {
-      _count++;
-      // _countControllerに_countを流す
-      _countController.sink.add(_count);
-    });
+  final _counter = Counter();
+
+  void increment() {
+    _counter.increment();
+
+    // _countControllerに_countを流す
+    _countController.sink.add(_counter);
+  }
+
+  void decrement() {
+    _counter.decrement();
+
+    // _counterControllerに_countを流す
+    _countController.sink.add(_counter);
   }
 
   void dispose() {
-    _actionController.close();
     _countController.close();
   }
 }
