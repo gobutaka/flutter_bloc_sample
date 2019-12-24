@@ -37,13 +37,27 @@ class CounterScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // カウントアップアクションをblocに送る
-          counterBloc.increment();
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: () {
+              // カウントアップアクションをblocに送る
+              counterBloc.increment();
+            },
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            onPressed: () {
+              // カウントダウンアクションをblocに送る
+              counterBloc.decrement();
+            },
+            tooltip: 'Decrement',
+            child: Icon(Icons.remove),
+          ),
+        ]
       ),
     );
   }
