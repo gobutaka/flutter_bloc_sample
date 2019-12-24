@@ -42,7 +42,7 @@ class CounterScreen extends StatelessWidget {
         children: <Widget>[
           FloatingActionButton(
             onPressed: () {
-              // カウントアップアクションをblocに送る
+              // CounterBlocに書いてあるincrement()を実行
               counterBloc.increment();
             },
             tooltip: 'Increment',
@@ -51,7 +51,7 @@ class CounterScreen extends StatelessWidget {
           const SizedBox(height: 8),
           FloatingActionButton(
             onPressed: () {
-              // カウントダウンアクションをblocに送る
+              // CounterBlocに書いてあるdecrement()を実行
               counterBloc.decrement();
             },
             tooltip: 'Decrement',

@@ -1,5 +1,13 @@
+// @requiredを使えるようにする
+import 'package:meta/meta.dart';
+
 class Counter {
-  int _value = 0;
+  Counter({
+    // 必須パラメータであることを示すアノテーション
+    @required int value
+  }) : _value = value;
+
+  int _value;
   int get value => _value;
 
   void increment() {
