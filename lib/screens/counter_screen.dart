@@ -9,9 +9,6 @@ class CounterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // blocは子widgetのbuild()メソッドで呼ぶのが定番
-    final counterBloc = Provider.of<CounterBloc>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -20,45 +17,82 @@ class CounterScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            // StreamBuilderを使うことで、この箇所だけUIを更新することができる
-            StreamBuilder(
-              initialData: 0,
-              stream: counterBloc.count,
-              builder: (context, snapshot) {
-                return Text(
-                  '${snapshot.data.value}',
-                  style: Theme.of(context).textTheme.display1,
-                );
-              },
-            )
+            CenterTextWidget(),
+            CounterNumberWidget(),
           ],
         ),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          FloatingActionButton(
-            onPressed: () {
-              // CounterBlocに書いてあるincrement()を実行
-              counterBloc.increment();
-            },
-            tooltip: 'Increment',
-            child: Icon(Icons.add),
-          ),
+          IncrementButtonWidget(),
           const SizedBox(height: 8),
-          FloatingActionButton(
-            onPressed: () {
-              // CounterBlocに書いてあるdecrement()を実行
-              counterBloc.decrement();
-            },
-            tooltip: 'Decrement',
-            child: Icon(Icons.remove),
-          ),
+          DecrementButtonWidget(),
         ]
       ),
+    );
+  }
+}
+
+class CenterTextWidget extends StatelessWidget {
+  const CenterTextWidget({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Text('You have pushed the button this many times:');
+  }
+}
+
+class CounterNumberWidget extends StatelessWidget {
+  const CounterNumberWidget({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    // 値を受け取る
+    final counterBloc = Provider.of<CounterBloc>(context);
+    // StreamBuilderを使うことで、この箇所だけUIを更新することができる
+    return StreamBuilder(
+      initialData: 0,
+      stream: counterBloc.count,
+      builder: (context, snapshot) {
+        return Text(
+          '${snapshot.data.value}',
+          style: Theme.of(context).textTheme.display1,
+        );
+      },
+    );
+  }
+}
+
+class IncrementButtonWidget extends StatelessWidget {
+  const IncrementButtonWidget({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    // 値を受け取る
+    final counterBloc = Provider.of<CounterBloc>(context);
+    return FloatingActionButton(
+      onPressed: () {
+        // CounterBlocに書いてあるincrement()を実行
+        counterBloc.increment();
+      },
+      tooltip: 'Increment',
+      child: Icon(Icons.add),
+    );
+  }
+}
+
+
+class DecrementButtonWidget extends StatelessWidget {
+  const DecrementButtonWidget({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    // 値を受け取る
+    final counterBloc = Provider.of<CounterBloc>(context);
+    return FloatingActionButton(
+      onPressed: () {
+        // CounterBlocに書いてあるdecrement()を実行
+        counterBloc.decrement();
+      },
+      tooltip: 'Decrement',
+      child: Icon(Icons.remove),
     );
   }
 }
