@@ -66,8 +66,11 @@ class IncrementButtonWidget extends StatelessWidget {
   const IncrementButtonWidget({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // 値を受け取る
-    final counterBloc = Provider.of<CounterBloc>(context);
+    /*
+      値を受け取る
+      値の変化に応じて表示更新などの処理をする必要がないので、「listen: false」でnotifyListeners()によるリビルドを回避
+    */
+    final counterBloc = Provider.of<CounterBloc>(context, listen: false);
     return FloatingActionButton(
       onPressed: () {
         // CounterBlocに書いてあるincrement()を実行
@@ -84,8 +87,11 @@ class DecrementButtonWidget extends StatelessWidget {
   const DecrementButtonWidget({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // 値を受け取る
-    final counterBloc = Provider.of<CounterBloc>(context);
+    /*
+      値を受け取る
+      値の変化に応じて表示更新などの処理をする必要がないので、「listen: false」でnotifyListeners()によるリビルドを回避
+    */
+    final counterBloc = Provider.of<CounterBloc>(context, listen: false);
     return FloatingActionButton(
       onPressed: () {
         // CounterBlocに書いてあるdecrement()を実行
